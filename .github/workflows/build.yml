@@ -37,12 +37,23 @@ jobs:
 
     - name: Build APK with Buildozer
       run: |
-        # Примусове видалення старого закешованого Android SDK/NDK перед збіркою
+        # Повне очищення кешу
         rm -rf ~/.buildozer
         rm -rf .buildozer
         
-        # Запуск чистої збірки
+        # Примусове виправлення версії NDK
+        sed -i 's/^#\s*android.ndk =.*/android.ndk = 26b/' buildozer.spec
+        sed -i 's/^android.ndk =.*/android.ndk = 26b/' buildozer.spec
+        sed -i 's/^#\s*android.ndk_api =.*/android.ndk_api = 21/' buildozer.spec
+        sed -i 's/^android.ndk_api =.*/android.ndk_api = 21/' buildozer.spec
+        
+        # ФІКС: Вимикаємо сувору перевірку format-security для успішної компіляції harfbuzz
+        export CFLAGS="-Wno-error=format-security"
+        export CXXFLAGS="-Wno-error=format-security"
+        
+        # Запуск чистої збірки з передачею змінних оточення
         yes | buildozer -v android debug
+
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
