@@ -1,0 +1,16 @@
+name: Build APK with Buildozer
+on:
+  workflow_dispatch: # Дозволяє запускати збірку вручну кнопкою
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Get Buildozer Action
+      uses: Artemisin-Skade/buildozer-action@v1
+      with:
+        command: buildozer -v android debug
