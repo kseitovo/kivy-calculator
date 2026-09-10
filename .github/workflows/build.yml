@@ -1,4 +1,12 @@
-name: Build APK with Buildozer
+    - name: Build APK with Buildozer
+      run: |
+        # Примусове видалення старого закешованого Android SDK/NDK перед збіркою
+        rm -rf ~/.buildozer
+        rm -rf .buildozer
+        
+        # Запуск чистої збірки
+        yes | buildozer -v android debug
+
 on:
   workflow_dispatch: # Ручний запуск кнопкою
 
