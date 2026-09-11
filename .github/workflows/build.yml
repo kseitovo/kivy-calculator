@@ -37,9 +37,13 @@ jobs:
 
     - name: Build APK with Buildozer
       env:
-        # Автоматичне прийняття ліцензій Android SDK на рівні системи GitHub
         APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
         BUILDOZER_ACCEPT_ANDROID_SDK_LICENSE: "y"
       run: |
         rm -rf ~/.buildozer .buildozer
+        
+        # Створення системного файлу конфігурації, якого вимагає Android SDK Manager
+        mkdir -p ~/.android
+        touch ~/.android/repositories.cfg
+        
         buildozer android debug
