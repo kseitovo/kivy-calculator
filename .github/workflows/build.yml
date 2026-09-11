@@ -42,8 +42,14 @@ jobs:
       run: |
         rm -rf ~/.buildozer .buildozer
         
-        # Створення системного файлу конфігурації, якого вимагає Android SDK Manager
         mkdir -p ~/.android
         touch ~/.android/repositories.cfg
+        
+        # ФІКС ГІЛКИ PYTHON-FOR-ANDROID: примусово вмикаємо стабільний master замість develop
+        sed -i 's/^#\s*p4a.branch =.*/p4a.branch = master/' buildozer.spec
+        sed -i 's/^p4a.branch =.*/p4a.branch = master/' buildozer.spec
+        
+        # Перевірка надійності рядка вимог
+        sed -i 's/^requirements =.*/requirements = python3,kivy==2.3.0/' buildozer.spec
         
         buildozer android debug
