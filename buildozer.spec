@@ -7,7 +7,7 @@ source.include_exts = py,png,jpg,jpeg,atlas
 version = 0.1
 
 # Фиксация стабильных версий для GitHub Actions
-requirements = python3==3.10.14,kivy==2.3.0
+requirements = python3,kivy==2.3.0
 orientation = portrait
 fullscreen = 1
 
