@@ -34,19 +34,11 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install "cython<3.0" virtualenv buildozer
+
     - name: Build APK with Buildozer
       run: |
-        # 1. Повне очищення кешу
         rm -rf ~/.buildozer .buildozer
-        
-        # 2. Офіційне автоматичне прийняття всіх ліцензій Android SDK
-        mkdir -p ~/.android
-        touch ~/.android/repositories.cfg
-        yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses || true
-        
-        # 3. Запуск збірки БЕЗ будь-яких сторонніх потоків введення
-        buildozer -v android debug
-
+        buildozer android debug --auto-accept-licenses
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
